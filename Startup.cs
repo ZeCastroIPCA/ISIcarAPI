@@ -7,17 +7,18 @@ using MongoDB.Driver;
 
 public class Startup
 {
+    // Constructor
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
     }
 
+    // Configuration property
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        // Add MongoDB configuration
+        // MongoDB configuration
         var mongoConfig = Configuration.GetSection("MongoDB");
         var connectionString = mongoConfig.GetValue<string>("ConnectionString");
         var databaseName = mongoConfig.GetValue<string>("DatabaseName");
@@ -29,14 +30,9 @@ public class Startup
             return client.GetDatabase(databaseName);
         });
 
-        // Rest of your ConfigureServices method
         services.AddControllers();
-        // Add any other services...
-
-        // End of ConfigureServices method
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
@@ -49,8 +45,7 @@ public class Startup
             app.UseHsts();
         }
 
-        // Add Swagger configuration
-
+        // Swagger configuration
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 

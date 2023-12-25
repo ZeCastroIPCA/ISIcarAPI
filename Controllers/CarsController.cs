@@ -7,19 +7,24 @@ using System.Linq;
 [ApiController]
 public class CarsController : ControllerBase
 {
+    // mongodb variable
     private readonly IMongoCollection<Car> _cars;
 
+    // constructor
     public CarsController(IMongoDatabase database)
     {
         _cars = database.GetCollection<Car>("Cars");
     }
-[HttpGet]
+
+    // GET: api/Cars
+    [HttpGet]
     public ActionResult<IEnumerable<Car>> Get()
     {
         var cars = _cars.Find(c => true).ToList();
         return Ok(cars);
     }
 
+    // GET: api/Cars/:id
     [HttpGet("{id}")]
     public ActionResult<Car> GetById(string id)
     {
@@ -30,6 +35,7 @@ public class CarsController : ControllerBase
         return Ok(car);
     }
 
+    // POST: api/Cars
     [HttpPost]
     public ActionResult<Car> Create([FromBody] Car newCar)
     {
@@ -38,6 +44,7 @@ public class CarsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = newCar.Id }, newCar);
     }
 
+    // PUT: api/Cars/:id
     [HttpPut("{id}")]
     public ActionResult<Car> Update(string id, [FromBody] Car updatedCar)
     {
@@ -55,6 +62,7 @@ public class CarsController : ControllerBase
         return Ok(updatedCar);
     }
 
+    // DELETE: api/Cars/:id
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {

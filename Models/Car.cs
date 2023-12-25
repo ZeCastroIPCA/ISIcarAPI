@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 public class Car
 {
+    // MongoDB will generate the Id for us
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
