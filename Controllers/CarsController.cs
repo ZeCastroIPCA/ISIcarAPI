@@ -52,7 +52,8 @@ public class CarsController : ControllerBase
         var update = Builders<Car>.Update
             .Set(c => c.Make, updatedCar.Make)
             .Set(c => c.Model, updatedCar.Model)
-            .Set(c => c.Year, updatedCar.Year);
+            .Set(c => c.Year, updatedCar.Year)
+            .Set(c => c.Price, updatedCar.Price);
 
         var result = _cars.UpdateOne(filter, update);
 

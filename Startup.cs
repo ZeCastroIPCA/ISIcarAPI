@@ -30,6 +30,19 @@ public class Startup
             return client.GetDatabase(databaseName);
         });
 
+        // Add CORS policy
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .WithExposedHeaders("Content-Disposition"); // Include any other headers you need
+            });
+        });
+
+        // Add controllers
         services.AddControllers();
     }
 
@@ -44,6 +57,9 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
+
+        // Add CORS policy
+        app.UseCors();
 
         // Swagger configuration
         app.UseHttpsRedirection();
