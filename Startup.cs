@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 
 public class Startup
@@ -28,6 +29,14 @@ public class Startup
         {
             var client = provider.GetRequiredService<IMongoClient>();
             return client.GetDatabase(databaseName);
+        });
+
+        // Add swagger
+        services.AddMvc();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Car API", Version = "v1" });
         });
 
         // Add CORS policy
@@ -72,6 +81,13 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+        });
+
+        // Swagger configuration
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Car API V1");
         });
     }
 }
