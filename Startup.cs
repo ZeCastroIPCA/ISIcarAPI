@@ -84,6 +84,7 @@ public class Startup
         });
 
         // Swagger configuration
+        // http://localhost:5213/swagger/v1/swagger.json
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
