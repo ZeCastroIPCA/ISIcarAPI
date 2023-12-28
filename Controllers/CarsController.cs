@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System.Collections.Generic;
-using System.Linq;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -74,4 +73,3 @@ public class CarsController : ControllerBase
         return NoContent();
     }
 }
-
